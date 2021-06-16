@@ -5,24 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SparklerButton extends StatefulWidget {
-  final Text buttonTitle;
-  final Color buttonColor;
-  final double buttonHeight;
-  final double buttonWidth;
-  final int durationTime;
+  final Text title;
+  final Color bgColor;
+  final double height;
+  final double width;
+  final int interval;
   final int time;
   final Color highlightColor;
-  final GestureTapCallback onclickButtonFunction;
+  final GestureTapCallback onclick;
 
   const SparklerButton({
     Key? key,
-    required this.buttonTitle,
-    required this.buttonColor,
-    required this.onclickButtonFunction,
+    required this.title,
+    required this.bgColor,
+    required this.onclick,
     this.highlightColor = Colors.white,
-    this.buttonHeight = 50.0,
-    this.buttonWidth = 280.0,
-    this.durationTime = 3,
+    this.height = 50.0,
+    this.width = 280.0,
+    this.interval = 3,
     this.time = 300,
   }) : super(key: key);
 
@@ -40,7 +40,7 @@ class _SparklerButtonState extends State<SparklerButton> with SingleTickerProvid
     if (sparklerCount == 1) {
       setState(() {
         _timer = Timer(
-          Duration(seconds: widget.durationTime),
+          Duration(seconds: widget.interval),
           _forward,
         );
       });
@@ -93,7 +93,7 @@ class _SparklerButtonState extends State<SparklerButton> with SingleTickerProvid
     _scale = 1 + _controller.value;
 
     return GestureDetector(
-      onTap: widget.onclickButtonFunction,
+      onTap: widget.onclick,
       child: Transform.scale(
         scale: _scale,
         child: _sparklerButton,
@@ -106,15 +106,15 @@ class _SparklerButtonState extends State<SparklerButton> with SingleTickerProvid
           child: Stack(
             children: <Widget>[
               Container(
-                width: widget.buttonWidth,
-                height: widget.buttonHeight,
+                width: widget.width,
+                height: widget.height,
                 child: ElevatedButton(
                   onPressed: () async {
                     return null;
                   },
                   child: null,
                   style: ElevatedButton.styleFrom(
-                      primary: widget.buttonColor,
+                      primary: widget.bgColor,
                       padding: EdgeInsets.only(
                         top: 10.0,
                         bottom: 10.0,
@@ -130,21 +130,21 @@ class _SparklerButtonState extends State<SparklerButton> with SingleTickerProvid
                 ),
               ),
               Container(
-                width: widget.buttonWidth,
-                height: widget.buttonHeight,
+                width: widget.width,
+                height: widget.height,
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(25.0)),
                 ),
                 child: Opacity(
                   opacity: 0.6,
                   child: Shimmer.fromColors(
-                    baseColor: widget.buttonColor,
+                    baseColor: widget.bgColor,
                     highlightColor: widget.highlightColor,
                     child: Container(
-                      width: widget.buttonWidth,
-                      height: widget.buttonHeight,
+                      width: widget.width,
+                      height: widget.height,
                       decoration: new BoxDecoration(
-                        color: widget.buttonColor,
+                        color: widget.bgColor,
                         borderRadius: BorderRadius.all(Radius.circular(25.0)),
                       ),
                     ),
@@ -152,13 +152,13 @@ class _SparklerButtonState extends State<SparklerButton> with SingleTickerProvid
                 ),
               ),
               Container(
-                width: widget.buttonWidth,
-                height: widget.buttonHeight,
+                width: widget.width,
+                height: widget.height,
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(25.0)),
                 ),
                 child: Center(
-                  child: widget.buttonTitle,
+                  child: widget.title,
                 ),
               ),
             ],
